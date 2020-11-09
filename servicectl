@@ -83,7 +83,8 @@ function exec_action() {
         
         return 0        
     fi
-  
+    [[ $cmd = -* ]] && cmd=${cmd:1}
+    echo $cmd
     eval $cmd
     return $?
 }

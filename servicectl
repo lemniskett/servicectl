@@ -45,6 +45,7 @@ function parse()
          key=`echo -n "$key" | sed 's/^\s*//;s/\s*$//'`
          _key=`echo -n "$_key" | sed 's/^\s*//;s/\s*$//'`
          if [ "$key" = "$_key" ]; then
+	   [[ $value = -* ]] && value=${value:1}
            echo $value
            exit 0;
          fi
@@ -83,9 +84,9 @@ function exec_action() {
         
         return 0        
     fi
-    [[ $cmd = -* ]] && cmd=${cmd:1}
+    mkdir -p /var/log/servicectl/$2
     echo $cmd
-    eval $cmd
+    eval $cmd > /var/log/servicectl/$2/out.log 2> /var/log/servicectl/$2/err.log &
     return $?
 }
 
